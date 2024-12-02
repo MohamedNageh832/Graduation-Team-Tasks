@@ -1,20 +1,23 @@
 import * as esbuild from "esbuild";
+import eslintPlugin from "esbuild-plugin-eslint";
 
 try {
   await esbuild.build({
-    mainFields: ["module", "main"],
-    entryPoints: ["src/index.ts"],
+    mainFields: ["module", "main"], // Prioritize ESModule, then CommonJS
+    entryPoints: ["src/index.ts"], // Entry point for your project
+    plugins: [eslintPlugin()], // ESLint plugin for linting during bundling
     bundle: true,
     sourcemap: false,
-    minify: true,
-    platform: "node",
-    format: "esm",
-    packages: "external",
-    target: ["es2020"],
+    minify: false,
+    platform: "node", // Ensure it's for Node.js (not the browser)
+    format: "cjs", // CommonJS format (for Node.js compatibility)
+    packages: "external", // Exclude all packages from bundling
+    target: ["es2020"], // Specify ECMAScript target version
     define: {
-      "process.env.NODE_ENV": "'production'",
+      "process.env.NODE_ENV": '"production"', // Set NODE_ENV to production
     },
-    outfile: "dist/index.js",
+    keepNames: true, // Keep function and variable names (for debugging)
+    outfile: "../dist/index.js", // Output bundled file location
   });
 
   console.log("Server bundled successfully for production!");

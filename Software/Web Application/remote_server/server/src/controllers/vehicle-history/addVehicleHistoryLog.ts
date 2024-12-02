@@ -5,6 +5,7 @@ import { vehicleHistorySchema } from "@/schemas";
 import type { RequestHandler } from "express";
 import { ulid } from "ulidx";
 import jwt from "jsonwebtoken";
+import { wss } from "@/config";
 
 export const addVehicleHistoryLog: RequestHandler = async (req, res, next) => {
   const data = req.body;
@@ -32,6 +33,10 @@ export const addVehicleHistoryLog: RequestHandler = async (req, res, next) => {
       data.battery_percentage,
       id,
     ],
+  });
+
+  wss.clients.forEach((client) => {
+    client.send("newLocation:" + JSON.stringify(data));
   });
 
   if (rowsAffected === 0) {

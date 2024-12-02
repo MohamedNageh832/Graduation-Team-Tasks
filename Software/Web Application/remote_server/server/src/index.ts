@@ -4,11 +4,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { authRoutes, vehicleHistoryRoutes } from "@/routes";
 import { errorHandler, GlobalError } from "@/middlewares";
+import { wss } from "@/config";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
@@ -43,3 +44,11 @@ app.all("*", (req, res, next) => {
 });
 
 app.use(errorHandler);
+
+server.on("upgrade", (req, socket, head) => {
+  socket.on("error", console.log);
+
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit("connection", ws, req);
+  });
+});

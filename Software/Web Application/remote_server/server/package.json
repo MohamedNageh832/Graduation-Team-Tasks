@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.16",
     "ulidx": "^2.4.1",
+    "ws": "^8.18.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -34,6 +35,8 @@
     "@types/node": "^22.7.7",
     "@types/nodemailer": "^6.4.17",
     "esbuild": "^0.24.0",
+    "esbuild-plugin-eslint": "^0.3.12",
+    "eslint": "^9.15.0",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"

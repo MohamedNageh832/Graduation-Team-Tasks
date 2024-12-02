@@ -14,7 +14,7 @@ export const login: RequestHandler = async (req, res, next) => {
 
   const isCorrectPassword = await compare(
     password,
-    rows[0]?.password as string
+    rows[0] ? (rows[0].password as string) : ""
   );
 
   if (!rows[0] || !isCorrectPassword) {

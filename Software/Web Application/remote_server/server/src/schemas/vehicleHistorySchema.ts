@@ -15,7 +15,4 @@ export const vehicleHistorySchema = z.object({
   battery_percentage: z
     .number({ required_error: "هذا الحقل مطلوب" })
     .min(2, "هذا الحقل مطلوب"),
-  user_id: z
-    .string({ required_error: "هذا الحقل مطلوب" })
-    .min(2, "هذا الحقل مطلوب"),
 });
